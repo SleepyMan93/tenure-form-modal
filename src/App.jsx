@@ -37,25 +37,16 @@ export default function App() {
     };
   }, [isOpen]);
 
-  return (
-    <>
-      {!isOpen && (
-        <div style={{ position: "fixed", bottom: 20, left: 20, zIndex: 99999 }}>
-          React Loaded ✅
-        </div>
-      )}
+  if (!isOpen) return null;
 
-      {isOpen && (
-        <div className="tenure-overlay" onClick={() => setIsOpen(false)}>
-          <div className="tenure-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="tenure-close" onClick={() => setIsOpen(false)}>
-              ×
-            </button>
-            <h2>Tenure form modal</h2>
-            <p>React is mounted successfully.</p>
-          </div>
-        </div>
-      )}
-    </>
+  return (
+    <div className="tenure-overlay" onClick={() => setIsOpen(false)}>
+      <div className="tenure-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="tenure-close" onClick={() => setIsOpen(false)}>
+          ×
+        </button>
+        <h2>Tenure form modal</h2>
+      </div>
+    </div>
   );
 }
