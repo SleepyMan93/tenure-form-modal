@@ -6,6 +6,21 @@ export default defineConfig({
   build: {
     outDir: "dist",
     assetsDir: "assets",
-    sourcemap: false,
+    cssCodeSplit: false,
+    rollupOptions: {
+      output: {
+        entryFileNames: "assets/tenure-form.js",
+        chunkFileNames: "assets/tenure-form.js",
+        assetFileNames: (assetInfo) => {
+          const name = assetInfo.name || "";
+
+          if (name.endsWith(".css")) {
+            return "assets/tenure-form.css";
+          }
+
+          return "assets/[name][extname]";
+        },
+      },
+    },
   },
 });
