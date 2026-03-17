@@ -1,17 +1,28 @@
 import StepLayout from "../StepLayout";
 
-export default function StepFinalDirect({ data, updateField, onBack }) {
+export default function StepFinalGeneral({
+  data,
+  errors,
+  onChange,
+  onBack,
+  onSubmit,
+}) {
   return (
     <StepLayout
-      title="You look like a strong fit"
-      intro="Share your details and we’ll make sure the right person comes back to you directly."
+      title="Tell us where to reply"
+      intro="We’ll review your enquiry and point you in the right direction."
       footer={
         <div className="tenure-button-row">
-          <button className="tenure-button tenure-button-secondary" type="button" onClick={onBack}>
+          <button
+            className="tenure-button tenure-button-secondary"
+            type="button"
+            onClick={onBack}
+          >
             Back
           </button>
-          <button className="tenure-button" type="button">
-            Request direct contact
+
+          <button className="tenure-button" type="button" onClick={onSubmit}>
+            Submit enquiry
           </button>
         </div>
       }
@@ -20,31 +31,31 @@ export default function StepFinalDirect({ data, updateField, onBack }) {
         <label className="tenure-field">
           <span className="tenure-label">Full name</span>
           <input
-            className="tenure-input"
+            className={`tenure-input ${errors.fullName ? "has-error" : ""}`}
             type="text"
             value={data.fullName}
-            onChange={(e) => updateField("fullName", e.target.value)}
+            onChange={(e) => onChange("fullName", e.target.value)}
+            placeholder="Your full name"
           />
+
+          {errors.fullName ? (
+            <p className="tenure-error">{errors.fullName}</p>
+          ) : null}
         </label>
 
         <label className="tenure-field">
-          <span className="tenure-label">Work email</span>
+          <span className="tenure-label">Email address</span>
           <input
-            className="tenure-input"
+            className={`tenure-input ${errors.email ? "has-error" : ""}`}
             type="email"
             value={data.email}
-            onChange={(e) => updateField("email", e.target.value)}
+            onChange={(e) => onChange("email", e.target.value)}
+            placeholder="name@company.com"
           />
-        </label>
 
-        <label className="tenure-field">
-          <span className="tenure-label">Role</span>
-          <input
-            className="tenure-input"
-            type="text"
-            value={data.role}
-            onChange={(e) => updateField("role", e.target.value)}
-          />
+          {errors.email ? (
+            <p className="tenure-error">{errors.email}</p>
+          ) : null}
         </label>
       </div>
     </StepLayout>
