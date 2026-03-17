@@ -28,3 +28,165 @@
   font-size: 28px;
   cursor: pointer;
 }
+
+.tenure-debug-pill {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 99999;
+  background: #111;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+}
+
+.tenure-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.tenure-modal {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow: auto;
+  background: #efebe3;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  padding: 28px 20px 20px;
+}
+
+.tenure-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  border: 0;
+  background: transparent;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  color: #232b2b;
+}
+
+.tenure-step-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tenure-step-header {
+  padding-right: 28px;
+}
+
+.tenure-step-title {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #1f2b2a;
+}
+
+.tenure-step-intro {
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #2f3837;
+}
+
+.tenure-step-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+.tenure-step-footer {
+  margin-top: 4px;
+}
+
+.tenure-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tenure-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tenure-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2b2a;
+}
+
+.tenure-input {
+  width: 100%;
+  border: 1px solid #d8d1c6;
+  border-radius: 14px;
+  background: #fff;
+  padding: 14px 16px;
+  font-size: 15px;
+  color: #1f2b2a;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.tenure-input:focus {
+  border-color: #8f9a92;
+}
+
+.tenure-textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.tenure-button-row {
+  display: flex;
+  gap: 12px;
+}
+
+.tenure-button {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: #d8d1c6;
+  color: #1f2b2a;
+  padding: 14px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 50px;
+  flex: 1;
+}
+
+.tenure-button-secondary {
+  background: #ffffff;
+  border: 1px solid #d8d1c6;
+}
+
+@media (min-width: 768px) {
+  .tenure-modal {
+    max-width: 640px;
+    padding: 34px 28px 28px;
+  }
+
+  .tenure-step-title {
+    font-size: 48px;
+  }
+
+  .tenure-step-card {
+    padding: 24px;
+  }
+}

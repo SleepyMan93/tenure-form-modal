@@ -1,6 +1,6 @@
-// src/App.jsx
-
 import { useEffect, useState } from "react";
+import ModalShell from "./components/ModalShell";
+import MultiStepForm from "./components/MultiStepForm";
 
 export default function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,25 +28,43 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.style.overflow = isOpen ? "hidden" : "";
-    document.body.style.overflow = isOpen ? "hidden" : "";
+    if (!isOpen) {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+      return;
+    }
+
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
 
     return () => {
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     };
   }, [isOpen]);
 
-  if (!isOpen) return null;
-
   return (
-    <div className="tenure-overlay" onClick={() => setIsOpen(false)}>
-      <div className="tenure-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="tenure-close" onClick={() => setIsOpen(false)}>
-          ×
-        </button>
-        <h2>Tenure form modal</h2>
-      </div>
-    </div>
+    <>
+      {!isOpen && (
+        <div className="tenure-debug-pill">
+          Tenure React Loaded
+        </div>
+      )}
+
+      {isOpen && (
+        <ModalShell onClose={() => setIsOpen(false)}>
+          <MultiStepForm onClose={() => setIsOpen(false)} />
+        </ModalShell>
+      )}
+    </>
   );
 }
