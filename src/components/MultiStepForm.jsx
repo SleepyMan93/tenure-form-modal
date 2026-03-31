@@ -15,7 +15,6 @@ export const PRODUCT_OPTIONS = [
   "Virtual GP",
   "Health Screening",
   "Pension",
-  "Cycle to Work",
 ];
 
 export const EXISTING_BENEFITS_OPTIONS = [

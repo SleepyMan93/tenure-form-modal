@@ -20,10 +20,10 @@ export default function StepTwo({
 
   return (
     <StepLayout
-      currentStep={currentStep}
-      totalSteps={totalSteps}
+      // totalSteps={totalSteps}
       title="A bit more context"
       intro="This helps us tailor the conversation and point you to the right person faster."
+      currentStep={currentStep}
       footer={
         <div className="tenure-button-row tenure-button-row-between">
           <button
@@ -40,7 +40,7 @@ export default function StepTwo({
         </div>
       }
     >
-      <div className="tenure-stack">
+      <div className="tenure-row">
         <label className="tenure-field">
           <span className="tenure-label">Company name</span>
           <input
@@ -65,7 +65,8 @@ export default function StepTwo({
           />
           {errors.website ? <p className="tenure-error">{errors.website}</p> : null}
         </label>
-
+      </div>
+      <div className="tenure-stack">
         <label className="tenure-field">
           <span className="tenure-label">Anything else you'd like to ask?</span>
           <textarea

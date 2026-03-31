@@ -11,10 +11,9 @@ export default function StepFinalDirect({
 }) {
   return (
     <StepLayout
-      currentStep={currentStep}
-      totalSteps={totalSteps}
       title="You look like a strong fit"
       intro="Share your details and we’ll make sure the right person comes back to you directly."
+      currentStep={currentStep}
       footer={
         <div className="tenure-button-row tenure-button-row-between">
           <button
@@ -55,7 +54,9 @@ export default function StepFinalDirect({
           />
           {errors.email ? <p className="tenure-error">{errors.email}</p> : null}
         </label>
+      </div>
 
+      <div className="tenure-row">
         <label className="tenure-field">
           <span className="tenure-label">Role</span>
           <input
@@ -63,7 +64,7 @@ export default function StepFinalDirect({
             type="text"
             value={data.role}
             onChange={(e) => onChange("role", e.target.value)}
-            placeholder="e.g. People Manager"
+            placeholder="People Manager"
           />
           {errors.role ? <p className="tenure-error">{errors.role}</p> : null}
         </label>

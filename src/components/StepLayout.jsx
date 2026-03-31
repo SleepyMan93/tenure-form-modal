@@ -45,14 +45,11 @@ export default function StepLayout({
 }) {
   return (
     <div className="tenure-step-shell">
-      <StepProgress currentStep={currentStep} totalSteps={totalSteps} />
 
       <div className="tenure-step-header">
-        <div className="tenure-step-kicker">
-          Step {currentStep} of {totalSteps}
-        </div>
         <h2 className="tenure-step-title">{title}</h2>
         {intro ? <p className="tenure-step-intro">{intro}</p> : null}
+        <StepProgress currentStep={currentStep} totalSteps={totalSteps} />
       </div>
 
       <div className="tenure-step-card">{children}</div>

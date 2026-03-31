@@ -31,7 +31,7 @@
   background: #efebe3;
   border-radius: 32px;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.18);
-  padding: 22px 22px 20px;
+  padding: 35px;
 }
 
 .tenure-close {
@@ -58,6 +58,7 @@
   align-items: center;
   gap: 0;
   padding-right: 48px;
+  margin-bottom: 10px;
 }
 
 .tenure-progress-segment {
@@ -107,6 +108,7 @@
 
 .tenure-step-header {
   padding-right: 56px;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -140,8 +142,9 @@
 .tenure-step-card {
   background: #ffffff;
   border-radius: 28px;
+  border: rgba(221, 214, 204, 1) solid 1px;
   padding: 22px;
-  box-shadow: 0 6px 18px rgba(25, 28, 27, 0.06);
+  box-shadow: 0 6px 18px rgba(25, 28, 27, 0.03);
 }
 
 .tenure-step-footer {
@@ -151,6 +154,13 @@
 .tenure-stack {
   display: flex;
   flex-direction: column;
+  gap: 16px;
+}
+
+.tenure-row {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
   gap: 16px;
 }
 
@@ -184,11 +194,12 @@
   border-radius: 18px;
   background: #fff;
   padding: 14px 16px;
-  font-size: 15px;
+  font-size: 14px;
   color: #1f2b2a;
   outline: none;
   box-sizing: border-box;
   appearance: none;
+  cursor: pointer;
 }
 
 .tenure-input:focus {
