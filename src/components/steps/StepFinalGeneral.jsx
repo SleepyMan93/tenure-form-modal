@@ -1,6 +1,8 @@
 import StepLayout from "../StepLayout";
 
 export default function StepFinalGeneral({
+  currentStep,
+  totalSteps,
   data,
   errors,
   onChange,
@@ -9,10 +11,12 @@ export default function StepFinalGeneral({
 }) {
   return (
     <StepLayout
+      currentStep={currentStep}
+      totalSteps={totalSteps}
       title="Tell us where to reply"
       intro="We’ll review your enquiry and point you in the right direction."
       footer={
-        <div className="tenure-button-row">
+        <div className="tenure-button-row tenure-button-row-between">
           <button
             className="tenure-button tenure-button-secondary"
             type="button"
@@ -37,10 +41,7 @@ export default function StepFinalGeneral({
             onChange={(e) => onChange("fullName", e.target.value)}
             placeholder="Your full name"
           />
-
-          {errors.fullName ? (
-            <p className="tenure-error">{errors.fullName}</p>
-          ) : null}
+          {errors.fullName ? <p className="tenure-error">{errors.fullName}</p> : null}
         </label>
 
         <label className="tenure-field">
@@ -52,10 +53,7 @@ export default function StepFinalGeneral({
             onChange={(e) => onChange("email", e.target.value)}
             placeholder="name@company.com"
           />
-
-          {errors.email ? (
-            <p className="tenure-error">{errors.email}</p>
-          ) : null}
+          {errors.email ? <p className="tenure-error">{errors.email}</p> : null}
         </label>
       </div>
     </StepLayout>

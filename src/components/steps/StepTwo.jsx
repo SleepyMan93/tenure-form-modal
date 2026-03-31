@@ -8,6 +8,8 @@ function getWordCount(text) {
 }
 
 export default function StepTwo({
+  currentStep,
+  totalSteps,
   data,
   errors,
   onChange,
@@ -18,10 +20,12 @@ export default function StepTwo({
 
   return (
     <StepLayout
+      currentStep={currentStep}
+      totalSteps={totalSteps}
       title="A bit more context"
-      intro="A little detail helps us point you in the right direction faster."
+      intro="This helps us tailor the conversation and point you to the right person faster."
       footer={
-        <div className="tenure-button-row">
+        <div className="tenure-button-row tenure-button-row-between">
           <button
             className="tenure-button tenure-button-secondary"
             type="button"
@@ -47,10 +51,7 @@ export default function StepTwo({
             onChange={(e) => onChange("companyName", e.target.value)}
             placeholder="Enter your company name"
           />
-
-          {errors.companyName ? (
-            <p className="tenure-error">{errors.companyName}</p>
-          ) : null}
+          {errors.companyName ? <p className="tenure-error">{errors.companyName}</p> : null}
         </label>
 
         <label className="tenure-field">
@@ -62,10 +63,7 @@ export default function StepTwo({
             onChange={(e) => onChange("website", e.target.value)}
             placeholder="company.com"
           />
-
-          {errors.website ? (
-            <p className="tenure-error">{errors.website}</p>
-          ) : null}
+          {errors.website ? <p className="tenure-error">{errors.website}</p> : null}
         </label>
 
         <label className="tenure-field">

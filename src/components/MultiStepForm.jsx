@@ -183,6 +183,7 @@ export default function MultiStepForm({ onClose }) {
   const [errors, setErrors] = useState({});
 
   const leadPath = useMemo(() => getLeadPath(formData), [formData]);
+  const totalSteps = 3;
 
   function updateField(name, value) {
     setFormData((prev) => ({
@@ -217,7 +218,6 @@ export default function MultiStepForm({ onClose }) {
   function nextFromStepOne() {
     const nextErrors = validateStepOne(formData);
     setErrors(nextErrors);
-
     if (Object.keys(nextErrors).length > 0) return;
     setStep(2);
   }
@@ -225,7 +225,6 @@ export default function MultiStepForm({ onClose }) {
   function nextFromStepTwo() {
     const nextErrors = validateStepTwo(formData);
     setErrors(nextErrors);
-
     if (Object.keys(nextErrors).length > 0) return;
     setStep(3);
   }
@@ -238,7 +237,6 @@ export default function MultiStepForm({ onClose }) {
   function submitGeneral() {
     const nextErrors = validateFinalGeneral(formData);
     setErrors(nextErrors);
-
     if (Object.keys(nextErrors).length > 0) return;
 
     console.log("Submitting general enquiry:", {
@@ -253,7 +251,6 @@ export default function MultiStepForm({ onClose }) {
   function submitDirect() {
     const nextErrors = validateFinalDirect(formData);
     setErrors(nextErrors);
-
     if (Object.keys(nextErrors).length > 0) return;
 
     console.log("Submitting direct contact:", {
@@ -265,9 +262,15 @@ export default function MultiStepForm({ onClose }) {
     onClose?.();
   }
 
+  const sharedStepProps = {
+    currentStep: step,
+    totalSteps,
+  };
+
   if (step === 1) {
     return (
       <StepOne
+        {...sharedStepProps}
         data={formData}
         errors={errors}
         onToggleProduct={toggleProduct}
@@ -284,6 +287,7 @@ export default function MultiStepForm({ onClose }) {
   if (step === 2) {
     return (
       <StepTwo
+        {...sharedStepProps}
         data={formData}
         errors={errors}
         onChange={updateField}
@@ -296,6 +300,7 @@ export default function MultiStepForm({ onClose }) {
   if (leadPath === "direct") {
     return (
       <StepFinalDirect
+        {...sharedStepProps}
         data={formData}
         errors={errors}
         onChange={updateField}
@@ -307,6 +312,7 @@ export default function MultiStepForm({ onClose }) {
 
   return (
     <StepFinalGeneral
+      {...sharedStepProps}
       data={formData}
       errors={errors}
       onChange={updateField}

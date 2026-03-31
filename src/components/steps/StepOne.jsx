@@ -1,6 +1,8 @@
 import StepLayout from "../StepLayout";
 
 export default function StepOne({
+  currentStep,
+  totalSteps,
   data,
   errors,
   onToggleProduct,
@@ -13,16 +15,20 @@ export default function StepOne({
 }) {
   return (
     <StepLayout
+      currentStep={currentStep}
+      totalSteps={totalSteps}
       title="What are you looking for help with?"
-      intro="We’ll use this to guide you to the most relevant next step."
+      intro="A few quick details will help guide you to the right next step."
       footer={
-        <button className="tenure-button" type="button" onClick={onNext}>
-          Continue
-        </button>
+        <div className="tenure-button-row tenure-button-row-end">
+          <button className="tenure-button" type="button" onClick={onNext}>
+            Continue
+          </button>
+        </div>
       }
     >
-      <div className="tenure-stack">
-        <div className="tenure-field">
+      <div className="tenure-step-one-grid">
+        <div className="tenure-field tenure-field-full">
           <span className="tenure-label">What products are you interested in?</span>
 
           <div className="tenure-pill-grid">
