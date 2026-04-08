@@ -58,7 +58,8 @@
   align-items: center;
   gap: 0;
   padding-right: 48px;
-  margin-bottom: 10px;
+  margin-top: 30px;
+  margin-bottom: 5px;
 }
 
 .tenure-progress-segment {
@@ -128,7 +129,6 @@
   line-height: 0.98;
   letter-spacing: -0.04em;
   color: #1f2b2a;
-  max-width: 14ch;
 }
 
 .tenure-step-intro {
@@ -137,14 +137,6 @@
   line-height: 1.45;
   color: #4f5753;
   max-width: 52ch;
-}
-
-.tenure-step-card {
-  background: #ffffff;
-  border-radius: 28px;
-  border: rgba(221, 214, 204, 1) solid 1px;
-  padding: 22px;
-  box-shadow: 0 6px 18px rgba(25, 28, 27, 0.03);
 }
 
 .tenure-step-footer {
@@ -158,16 +150,16 @@
 }
 
 .tenure-row {
-  display: flex;
-  justify-content: space-between;
   flex-direction: row;
-  gap: 16px;
+  justify-content: space-between;
+  gap: 20px;
+  display: flex;
 }
 
 .tenure-step-one-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px 18px;
+  gap: 20px 20px;
 }
 
 .tenure-field-full {
@@ -188,18 +180,18 @@
 }
 
 .tenure-input {
-  width: 100%;
-  min-height: 52px;
-  border: 1px solid #c4cbc5;
-  border-radius: 18px;
-  background: #fff;
-  padding: 14px 16px;
-  font-size: 14px;
   color: #1f2b2a;
-  outline: none;
   box-sizing: border-box;
   appearance: none;
   cursor: pointer;
+  background: rgba(253, 252, 251, 1);
+  border: 1px solid rgba(221, 214, 204, 1);
+  border-radius: 18px;
+  outline: none;
+  width: 100%;
+  min-height: 45px;
+  padding: 14px 16px;
+  font-size: 14px;
 }
 
 .tenure-input:focus {
@@ -250,7 +242,7 @@
 }
 
 .tenure-button-secondary {
-  background: #ffffff;
+  background: rgba(253, 252, 251, 1);
   border: 1px solid #d8d1c6;
 }
 
@@ -342,10 +334,6 @@
     gap: 14px;
   }
 
-  .tenure-progress {
-    padding-right: 38px;
-  }
-
   .tenure-progress-dot {
     width: 28px;
     height: 28px;
@@ -374,8 +362,14 @@
   }
 
   .tenure-step-card {
-    padding: 16px;
-    border-radius: 20px;
+    background: rgba(253, 252, 251, 1);
+    display: grid;
+    grid-row-gap: 20px;
+    border: 1px solid rgba(221, 214, 204, 1);
+    border-radius: 28px;
+    padding: 22px;
+    box-shadow: 0 6px 18px #191c1b08;
+    grid-auto-flow: row;
   }
 
   .tenure-stack {
