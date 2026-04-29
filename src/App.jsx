@@ -54,12 +54,6 @@ export default function App() {
 
   return (
     <>
-      {!isOpen && (
-        <div className="tenure-debug-pill">
-          Tenure React Loaded
-        </div>
-      )}
-
       {isOpen && (
         <ModalShell onClose={() => setIsOpen(false)}>
           <MultiStepForm onClose={() => setIsOpen(false)} />

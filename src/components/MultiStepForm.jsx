@@ -3,25 +3,24 @@ import StepOne from "./steps/StepOne";
 import StepTwo from "./steps/StepTwo";
 import StepFinalGeneral from "./steps/StepFinalGeneral";
 import StepFinalDirect from "./steps/StepFinalDirect";
+import StepSuccess from "./steps/StepSuccess";
 
 export const PRODUCT_OPTIONS = [
   "Private Medical Insurance",
   "Dental Insurance",
   "Health Cash Plan",
-  "Life Insurance",
-  "Income Protection",
-  "Critical Illness Cover",
+  "Group Life Insurance",
+  "Group Income Protection",
+  "Group Critical Illness",
   "Employee Assistance Programme",
-  "Virtual GP",
-  "Health Screening",
   "Pension",
+  "Cycle to Work",
+  "Corporate Protection",
 ];
 
 export const EXISTING_BENEFITS_OPTIONS = [
-  "We already have most of these in place",
-  "We have some of these in place",
-  "We don’t have these in place",
-  "We currently offer no benefits at all",
+  "Not yet",
+  "Yes, but interested in reviewing or expanding",
 ];
 
 export const URGENCY_OPTIONS = [
@@ -36,6 +35,8 @@ export const EMPLOYEE_SIZE_OPTIONS = [
   "10-50",
   "50+",
 ];
+
+const ENQUIRY_API_URL = "https://tenure-form-modal.vercel.app/api/enquiry";
 
 const initialFormData = {
   productsInterested: [],
@@ -80,9 +81,7 @@ function isLikelyValidWebsite(value) {
 
     if (!host || !host.includes(".")) return false;
 
-    const hostParts = host.split(".");
-    const tld = hostParts[hostParts.length - 1];
-
+    const tld = host.split(".").pop();
     return /^[a-z]{2,}$/i.test(tld);
   } catch {
     return false;
@@ -97,19 +96,19 @@ function isValidEmail(value) {
 function validateStepOne(data) {
   const errors = {};
 
-  if (!Array.isArray(data.productsInterested) || data.productsInterested.length < 1) {
+  if (!data.productsInterested.length) {
     errors.productsInterested = "Please select at least one product.";
   }
 
-  if (!String(data.existingBenefitsStatus || "").trim()) {
+  if (!data.existingBenefitsStatus) {
     errors.existingBenefitsStatus = "Please choose an option.";
   }
 
-  if (!String(data.urgency || "").trim()) {
+  if (!data.urgency) {
     errors.urgency = "Please select your urgency.";
   }
 
-  if (!String(data.employeeSize || "").trim()) {
+  if (!data.employeeSize) {
     errors.employeeSize = "Please select employee size.";
   }
 
@@ -118,25 +117,22 @@ function validateStepOne(data) {
 
 function validateStepTwo(data) {
   const errors = {};
-  const companyName = String(data.companyName || "").trim();
-  const website = String(data.website || "").trim();
-  const extraQuestions = String(data.extraQuestions || "").trim();
+  const companyName = data.companyName.trim();
+  const website = data.website.trim();
 
-  if (!companyName) {
-    errors.companyName = "Please enter your company name.";
-  } else if (companyName.length < 5) {
+  if (companyName && companyName.length < 5) {
     errors.companyName = "Company name must be at least 5 characters.";
-  } else if (companyName.length > 75) {
+  }
+
+  if (companyName.length > 75) {
     errors.companyName = "Company name must be 75 characters or fewer.";
   }
 
-  if (!website) {
-    errors.website = "Please enter your website.";
-  } else if (!isLikelyValidWebsite(website)) {
-    errors.website = "Please enter a valid website, such as company.com.";
+  if (website && !isLikelyValidWebsite(website)) {
+    errors.website = "Please enter a valid website.";
   }
 
-  if (extraQuestions && getWordCount(extraQuestions) > 250) {
+  if (data.extraQuestions && getWordCount(data.extraQuestions) > 250) {
     errors.extraQuestions = "Please keep this to 250 words or fewer.";
   }
 
@@ -145,18 +141,12 @@ function validateStepTwo(data) {
 
 function validateFinalGeneral(data) {
   const errors = {};
-  const fullName = String(data.fullName || "").trim();
-  const email = String(data.email || "").trim();
 
-  if (!fullName) {
+  if (!data.fullName.trim() || data.fullName.length < 2) {
     errors.fullName = "Please enter your full name.";
-  } else if (fullName.length < 2) {
-    errors.fullName = "Please enter a valid name.";
   }
 
-  if (!email) {
-    errors.email = "Please enter your email address.";
-  } else if (!isValidEmail(email)) {
+  if (!data.email || !isValidEmail(data.email)) {
     errors.email = "Please enter a valid email address.";
   }
 
@@ -165,12 +155,9 @@ function validateFinalGeneral(data) {
 
 function validateFinalDirect(data) {
   const errors = validateFinalGeneral(data);
-  const role = String(data.role || "").trim();
 
-  if (!role) {
+  if (!data.role || data.role.length < 2) {
     errors.role = "Please enter your role.";
-  } else if (role.length < 2) {
-    errors.role = "Please enter a valid role.";
   }
 
   return errors;
@@ -180,20 +167,19 @@ export default function MultiStepForm({ onClose }) {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const leadPath = useMemo(() => getLeadPath(formData), [formData]);
-  const totalSteps = 3;
+
+  if (isSubmitted) {
+    return <StepSuccess leadType={leadPath} onClose={onClose} />;
+  }
 
   function updateField(name, value) {
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    setErrors((prev) => ({
-      ...prev,
-      [name]: "",
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   }
 
   function toggleProduct(product) {
@@ -203,28 +189,23 @@ export default function MultiStepForm({ onClose }) {
       return {
         ...prev,
         productsInterested: exists
-          ? prev.productsInterested.filter((item) => item !== product)
+          ? prev.productsInterested.filter((p) => p !== product)
           : [...prev.productsInterested, product],
       };
     });
-
-    setErrors((prev) => ({
-      ...prev,
-      productsInterested: "",
-    }));
   }
 
   function nextFromStepOne() {
     const nextErrors = validateStepOne(formData);
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
+    if (Object.keys(nextErrors).length) return;
     setStep(2);
   }
 
   function nextFromStepTwo() {
     const nextErrors = validateStepTwo(formData);
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
+    if (Object.keys(nextErrors).length) return;
     setStep(3);
   }
 
@@ -236,44 +217,62 @@ export default function MultiStepForm({ onClose }) {
   function submitGeneral() {
     const nextErrors = validateFinalGeneral(formData);
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
+    if (Object.keys(nextErrors).length) return;
 
-    console.log("Submitting general enquiry:", {
-      leadType: "general",
-      ...formData,
-    });
-
-    alert("General enquiry submit is wired for validation. Submission endpoint comes next.");
-    onClose?.();
+    sendForm("general");
   }
 
   function submitDirect() {
     const nextErrors = validateFinalDirect(formData);
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
+    if (Object.keys(nextErrors).length) return;
 
-    console.log("Submitting direct contact:", {
-      leadType: "direct",
-      ...formData,
-    });
-
-    alert("Direct contact submit is wired for validation. Submission endpoint comes next.");
-    onClose?.();
+    sendForm("direct");
   }
 
-  const sharedStepProps = {
+  async function sendForm(type) {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setSubmitError("");
+
+    try {
+      const res = await fetch(ENQUIRY_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          leadType: type,
+        }),
+      });
+
+      if (!res.ok) throw new Error();
+
+      setIsSubmitted(true);
+    } catch {
+      setSubmitError("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  const shared = {
     currentStep: step,
-    totalSteps,
+    totalSteps: 3,
+    data: formData,
+    errors,
+    onChange: updateField,
+    isSubmitting,
+    submitError,
   };
 
   if (step === 1) {
     return (
       <StepOne
-        {...sharedStepProps}
-        data={formData}
-        errors={errors}
+        {...shared}
         onToggleProduct={toggleProduct}
-        onChange={updateField}
         onNext={nextFromStepOne}
         productOptions={PRODUCT_OPTIONS}
         existingBenefitsOptions={EXISTING_BENEFITS_OPTIONS}
@@ -286,10 +285,7 @@ export default function MultiStepForm({ onClose }) {
   if (step === 2) {
     return (
       <StepTwo
-        {...sharedStepProps}
-        data={formData}
-        errors={errors}
-        onChange={updateField}
+        {...shared}
         onBack={prevStep}
         onNext={nextFromStepTwo}
       />
@@ -299,10 +295,7 @@ export default function MultiStepForm({ onClose }) {
   if (leadPath === "direct") {
     return (
       <StepFinalDirect
-        {...sharedStepProps}
-        data={formData}
-        errors={errors}
-        onChange={updateField}
+        {...shared}
         onBack={prevStep}
         onSubmit={submitDirect}
       />
@@ -311,10 +304,7 @@ export default function MultiStepForm({ onClose }) {
 
   return (
     <StepFinalGeneral
-      {...sharedStepProps}
-      data={formData}
-      errors={errors}
-      onChange={updateField}
+      {...shared}
       onBack={prevStep}
       onSubmit={submitGeneral}
     />

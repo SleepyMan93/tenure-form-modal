@@ -16,6 +16,9 @@ export default function StepFinalDirect({
       currentStep={currentStep}
       footer={
         <div className="tenure-button-row tenure-button-row-between">
+          <p className="tenure-consent">
+            This is a contact enquiry only. Your details will not be used for marketing communications.
+          </p>
           <button
             className="tenure-button tenure-button-secondary"
             type="button"
@@ -24,8 +27,13 @@ export default function StepFinalDirect({
             Back
           </button>
 
-          <button className="tenure-button" type="button" onClick={onSubmit}>
-            Request direct contact
+          <button
+            className="tenure-button"
+            type="button"
+            onClick={onSubmit}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Sending..." : "Request direct contact"}
           </button>
         </div>
       }

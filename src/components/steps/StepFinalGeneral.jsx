@@ -25,9 +25,15 @@ export default function StepFinalGeneral({
             Back
           </button>
 
-          <button className="tenure-button" type="button" onClick={onSubmit}>
-            Submit enquiry
+          <button
+            className="tenure-button"
+            type="button"
+            onClick={onSubmit}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Sending..." : "Submit enquiry"}
           </button>
+          {submitError ? <p className="tenure-submit-error">{submitError}</p> : null}
         </div>
       }
     >
