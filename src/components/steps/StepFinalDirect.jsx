@@ -19,9 +19,11 @@ export default function StepFinalDirect({
       totalSteps={totalSteps}
       footer={
         <div className="tenure-button-row tenure-button-row-between">
-          <p className="tenure-consent">
+          <div>
+                      <p className="tenure-consent">
             This is a contact enquiry only. Your details will not be used for marketing communications.
           </p>
+          </div>
           <button
             className="tenure-button tenure-button-secondary"
             type="button"
