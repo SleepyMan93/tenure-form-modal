@@ -151,9 +151,12 @@
 
 .tenure-row {
   flex-direction: row;
-  justify-content: space-between;
   gap: 20px;
   display: flex;
+}
+
+.tenure-row .tenure-field {
+  width: 50%;
 }
 
 .tenure-step-one-grid {

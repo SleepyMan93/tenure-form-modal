@@ -8,12 +8,15 @@ export default function StepFinalDirect({
   onChange,
   onBack,
   onSubmit,
+  isSubmitting,
+  submitError,
 }) {
   return (
     <StepLayout
       title="You look like a strong fit"
       intro="Share your details and we’ll make sure the right person comes back to you directly."
       currentStep={currentStep}
+      totalSteps={totalSteps}
       footer={
         <div className="tenure-button-row tenure-button-row-between">
           <p className="tenure-consent">
@@ -35,6 +38,7 @@ export default function StepFinalDirect({
           >
             {isSubmitting ? "Sending..." : "Request direct contact"}
           </button>
+          {submitError ? <p className="tenure-submit-error">{submitError}</p> : null}
         </div>
       }
     >
