@@ -215,6 +215,7 @@
   display: flex;
   gap: 12px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .tenure-button-row-between {
@@ -238,6 +239,7 @@
   min-height: 52px;
   min-width: 148px;
   transition: transform 0.18s ease, background 0.18s ease;
+  width: 45%;
 }
 
 .tenure-button:hover {
@@ -247,6 +249,7 @@
 .tenure-button-secondary {
   background: rgba(253, 252, 251, 1);
   border: 1px solid #d8d1c6;
+  width: 45%;
 }
 
 .tenure-pill-grid {
@@ -318,17 +321,28 @@
   align-items: flex-start;
 }
 
+.tenure-success-shell {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding: 22px 32px 34px;
+}
+
 .tenure-success-icon {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 999px;
   background: #28b463;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 800;
+  margin-top: 42px;
 }
 
 .tenure-success-card p {
@@ -338,9 +352,40 @@
   line-height: 1.5;
 }
 
+.tenure-success-title {
+  margin: 0;
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  color: #1f2b2a;
+}
+
+.tenure-success-intro {
+  margin: 12px 0 0;
+  max-width: 520px;
+  font-size: 15px;
+  line-height: 1.45;
+  color: #4f5753;
+}
+
 .tenure-success-muted {
-  color: #6b736f !important;
-  font-size: 13px !important;
+  margin: 8px 0 0;
+  max-width: 620px;
+  color: #6b736f;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.tenure-success-actions {
+  margin-top: 42px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.tenure-success-actions .tenure-button {
+  min-width: 260px;
+  max-width: 320px;
 }
 
 @media (max-width: 991px) {
