@@ -498,4 +498,48 @@
     width: 100%;
     min-width: 0;
   }
+
+  /* SUCCESS STEP MOBILE FIX */
+
+  .tenure-success-shell {
+    padding: 20px 18px 24px;
+    gap: 10px;
+    min-height: auto;
+  }
+
+  .tenure-success-title {
+    font-size: 28px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 12ch;
+  }
+
+  .tenure-success-intro {
+    font-size: 13.5px;
+    line-height: 1.4;
+    margin-top: 6px;
+  }
+
+  .tenure-success-muted {
+    font-size: 12px;
+    line-height: 1.4;
+    margin-top: 4px;
+    max-width: 300px;
+  }
+
+  .tenure-success-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+    margin-top: 18px;
+  }
+
+  .tenure-success-actions {
+    margin-top: 18px;
+  }
+
+  .tenure-success-actions .tenure-button {
+    width: 100%;
+    max-width: 260px;
+  }
 }
